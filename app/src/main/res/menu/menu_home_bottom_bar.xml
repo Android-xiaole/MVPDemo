@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_home_1"
+        android:icon="@drawable/featured"
+        android:title="@string/tab_featured"/>
+
+    <item
+        android:id="@+id/menu_home_2"
+        android:icon="@drawable/classify"
+        android:title="@string/tab_classify"/>
+
+    <item
+        android:id="@+id/menu_home_3"
+        android:icon="@drawable/money"
+        android:title="@string/tab_money"/>
+
+    <item
+        android:id="@+id/menu_home_4"
+        android:icon="@drawable/bookshelf"
+        android:title="@string/tab_bookshelf"/>
+
+    <item
+        android:id="@+id/menu_home_5"
+        android:icon="@drawable/mine"
+        android:title="@string/tab_mine"/>
+</menu>

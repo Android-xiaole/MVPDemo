@@ -1,0 +1,80 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.jakewharton.butterknife'
+
+android {
+    compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
+
+
+    defaultConfig {
+        minSdkVersion Integer.parseInt(MIN_SDK_VERSION)
+        targetSdkVersion Integer.parseInt(TARGET_SDK_VERSION)
+
+        //设置资源文件命名加上约束，解耦
+        resourcePrefix "base_"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    api 'androidx.appcompat:appcompat:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //rxjava库，暂时先用rxjava2因为retrofit2还没适配rxjava3，https://github.com/ReactiveX/RxJava
+    api "io.reactivex.rxjava2:rxjava:2.2.14"
+    //rxandroid库，https://github.com/ReactiveX/RxAndroid
+    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
+
+    //retrofit2库，https://github.com/square/retrofit
+    api 'com.squareup.retrofit2:retrofit:2.6.2'
+    //retrofit2的转换器，将json返回结果直接转换成类，底层是gson
+    api 'com.squareup.retrofit2:converter-gson:2.6.2'
+    //retrofit2的转换器，将返回结果直接转换成String
+    api 'com.squareup.retrofit2:converter-scalars:2.6.2'
+    //retrofit2适配rxjava的库，https://github.com/square/retrofit/tree/master/retrofit-adapters/rxjava2
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.6.2'
+
+    //gson解析，https://github.com/google/gson
+    api'com.google.code.gson:gson:2.8.6'
+
+    // 如果使用的是java 8要显示声明如下的,这是google的lifecycle组件
+    def lifecycle_version = "1.1.1"
+    api "android.arch.lifecycle:common-java8:$lifecycle_version"
+
+    // autodispose库，配合lifecycle组件使用,用于解决MVP模式内存泄漏的问题,https://github.com/uber/AutoDispose
+    api 'com.uber.autodispose:autodispose-android-archcomponents:1.4.0'
+
+    //非常全面的android工具类库,https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
+    api 'com.blankj:utilcodex:1.25.9'
+
+    //黄油刀控件注解框架,https://github.com/JakeWharton/butterknife
+    api 'com.jakewharton:butterknife:10.2.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
+
+    //alibaba路由框架，需要注意的是版本号一定要是对应的最新版本，https://github.com/alibaba/ARouter
+    api 'com.alibaba:arouter-api:1.5.0'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
+}
