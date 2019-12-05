@@ -42,6 +42,24 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         pathList.add(LeeConstants.RoutePath.APP_NETDEMO_ACTIVITY);
         pathList.add(LeeConstants.RoutePath.APP_DBDEMO_ACTIVITY);
         fragmentHelper = new FragmentHelper<>(this, pathList, R.id.fl_container);
+
+        //这里可以添加带有参数的fragment
+        CommonFragment commonFragment1 = new CommonFragment();
+        Bundle bundle1 = new Bundle();
+        bundle1.putString("tv_des","commonFragment1");
+        commonFragment1.setArguments(bundle1);
+        CommonFragment commonFragment2 = new CommonFragment();
+        Bundle bundle2 = new Bundle();
+        bundle2.putString("tv_des","commonFragment2");
+        commonFragment2.setArguments(bundle2);
+        CommonFragment commonFragment3 = new CommonFragment();
+        Bundle bundle3 = new Bundle();
+        bundle3.putString("tv_des","commonFragment3");
+        commonFragment3.setArguments(bundle3);
+
+        fragmentHelper.addFragment(commonFragment1);
+        fragmentHelper.addFragment(commonFragment2);
+        fragmentHelper.addFragment(commonFragment3);
     }
 
     @Override

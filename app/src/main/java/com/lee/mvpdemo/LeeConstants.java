@@ -9,6 +9,7 @@ import com.lee.base.BaseConstants;
  */
 public class LeeConstants extends BaseConstants {
 
+    //debug变量也可以通过gradle的多渠道打包的方式，通过AndroidManifest的meta-data标签获取配置值，这样就不用担心打生产包的时候还需要修改debug值
     public static final boolean IS_DEBUG = true;
 
     /**

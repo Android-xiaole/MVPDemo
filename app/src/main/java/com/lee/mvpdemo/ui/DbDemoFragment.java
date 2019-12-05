@@ -33,6 +33,7 @@ public class DbDemoFragment extends BaseFragment {
 
     @Override
     protected boolean onBackPressed() {
+        showShortToast(this.getClass().getSimpleName()+"：页面触发了返回键");
         return true;
     }
 }
