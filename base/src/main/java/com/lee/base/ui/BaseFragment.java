@@ -32,7 +32,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends BackHandledF
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         p = setPresenter();
+        p = setPresenter();
         if (p != null) {
             //绑定MVP模式的View
             p.attachView(this);
@@ -67,8 +67,17 @@ public abstract class BaseFragment<P extends BasePresenter> extends BackHandledF
 
     protected abstract void initData(Bundle savedInstanceState);
 
-    protected P getPresenter(){
+    protected P getPresenter() {
         return p;
+    }
+
+    /**
+     * 拦截点击事件的方法
+     *
+     * @return true:拦截 false:不拦截
+     */
+    protected boolean onInterceptTouchEvent(){
+        return false;
     }
 
     @Override
@@ -84,32 +93,21 @@ public abstract class BaseFragment<P extends BasePresenter> extends BackHandledF
 
     @Override
     public void showProgress() {
-        if (dialog == null){
+        if (dialog == null) {
             dialog = new BaseProgress();
         }
-        if (getParentFragment()!=null){
-            dialog.show(getChildFragmentManager());
-        }else{
-            dialog.show(getFragmentManager());
-        }
+        dialog.show(getChildFragmentManager());
     }
 
     @Override
     public void showProgress(DialogInterface.OnDismissListener onDismissListener) {
-        if (dialog == null){
-            dialog = new BaseProgress();
-        }
-        if (getParentFragment()!=null){
-            dialog.show(getChildFragmentManager());
-        }else{
-            dialog.show(getFragmentManager());
-        }
+        showProgress();
         dialog.addDismissListener(onDismissListener);
     }
 
     @Override
     public void dismissProgress() {
-        if (dialog!=null){
+        if (dialog != null) {
             dialog.dismiss();
         }
     }

@@ -2,6 +2,7 @@ package com.lee.base.ui;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.MotionEvent;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.lee.base.mvp.BaseContract;
@@ -58,6 +59,19 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
             initData(savedInstanceState);
         }
         isStart = true;
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        for (Fragment fragment : fragments) {
+            if (fragment.isVisible() && fragment instanceof BaseFragment) {
+                if (((BaseFragment) fragment).onInterceptTouchEvent()) {
+                    return true;
+                }
+            }
+        }
+        return super.dispatchTouchEvent(ev);
     }
 
     @Override
@@ -119,10 +133,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     @Override
     public void showProgress(DialogInterface.OnDismissListener onDismissListener) {
-        if (dialog == null) {
-            dialog = new BaseProgress();
-        }
-        dialog.show(getSupportFragmentManager());
+        showProgress();
         dialog.addDismissListener(onDismissListener);
     }
 

@@ -38,6 +38,9 @@ public class CommonFragment extends BaseFragment {
         if (bundle!=null){
             des = bundle.getString("tv_des");
             tv_des.setText(des);
+            if (des.equals("DbDemoFragment childFragment")){
+                showProgress();
+            }
         }
     }
 
