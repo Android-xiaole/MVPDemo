@@ -25,16 +25,20 @@ public class BasePresenter<V extends BaseContract.IView> implements BaseContract
     }
 
     @Override
-    public void onStart(@NonNull LifecycleOwner owner) {}
+    public void onStart(@NonNull LifecycleOwner owner) {
+    }
 
     @Override
-    public void onResume(@NonNull LifecycleOwner owner) {}
+    public void onResume(@NonNull LifecycleOwner owner) {
+    }
 
     @Override
-    public void onPause(@NonNull LifecycleOwner owner) {}
+    public void onPause(@NonNull LifecycleOwner owner) {
+    }
 
     @Override
-    public void onStop(@NonNull LifecycleOwner owner) {}
+    public void onStop(@NonNull LifecycleOwner owner) {
+    }
 
     @Override
     public void onDestroy(@NonNull LifecycleOwner owner) {
@@ -45,12 +49,33 @@ public class BasePresenter<V extends BaseContract.IView> implements BaseContract
         }
     }
 
-    protected  <T> AutoDisposeConverter<T> bindLifecycle() {
+    /**
+     * 默认绑定生命周期方法，默认在界面销毁的时候结束绑定（会自动解除订阅）
+     *
+     * @param <T> 泛型参数
+     * @return AutoDisposeConverter
+     */
+    protected <T> AutoDisposeConverter<T> bindLifecycle() {
         if (null == lifecycleOwner) {
             throw new NullPointerException("lifecycleOwner == null");
         }
         //默认指定在ON_DESTROY生命周期的时候解除订阅
         return AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(lifecycleOwner, Lifecycle.Event.ON_DESTROY));
+    }
+
+    /**
+     * 可选生命周期的方法，可以指定任意生命周期去解除订阅
+     *
+     * @param event 生命周期
+     * @param <T>   泛型参数
+     * @return AutoDisposeConverter
+     */
+    protected <T> AutoDisposeConverter<T> bindLifecycle(Lifecycle.Event event) {
+        if (null == lifecycleOwner) {
+            throw new NullPointerException("lifecycleOwner == null");
+        }
+        //默认指定在ON_DESTROY生命周期的时候解除订阅
+        return AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(lifecycleOwner, event));
     }
 
     @Override

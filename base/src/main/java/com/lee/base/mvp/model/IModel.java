@@ -1,4 +1,6 @@
-package com.lee.base.mvp;
+package com.lee.base.mvp.model;
+
+import com.lee.base.mvp.BaseError;
 
 /**
  * Author ：le

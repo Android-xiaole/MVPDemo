@@ -110,6 +110,9 @@ public abstract class BaseApi {
                 : connectTimeoutMills, TimeUnit.MILLISECONDS);
         builder.readTimeout(provider.configReadTimeoutMills() != 0
                 ? provider.configReadTimeoutMills() : readTimeoutMills, TimeUnit.MILLISECONDS);
+        builder.writeTimeout(provider.configWriteTimeoutMills() != 0
+                ? provider.configWriteTimeoutMills()
+                : connectTimeoutMills, TimeUnit.MILLISECONDS);
 
         //配置cookie
         CookieJar cookieJar = provider.configCookie();

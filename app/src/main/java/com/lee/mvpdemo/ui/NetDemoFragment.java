@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.lee.base.ui.BaseActivity;
 import com.lee.base.ui.BaseFragment;
 import com.lee.mvpdemo.LeeConstants;
 import com.lee.mvpdemo.R;
@@ -19,7 +18,7 @@ import butterknife.OnClick;
  * Date ：2019-11-19 15:17
  * Description ：
  */
-@Route(path = LeeConstants.RoutePath.APP_NETDEMO_ACTIVITY)
+@Route(path = LeeConstants.RoutePath.APP_NETDEMO_FRAGMENT)
 public class NetDemoFragment extends BaseFragment<NetDemoPresenter> implements NetDemoContract.View {
 
     @BindView(R.id.tv_result)
@@ -41,7 +40,7 @@ public class NetDemoFragment extends BaseFragment<NetDemoPresenter> implements N
     }
 
 
-    @OnClick({R2.id.btn_test_api, R2.id.btn_test_api2, R2.id.btn_test_api3})
+    @OnClick({R2.id.btn_test_api, R2.id.btn_test_api2, R2.id.btn_test_api3, R2.id.btn_test_api4})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
@@ -55,6 +54,13 @@ public class NetDemoFragment extends BaseFragment<NetDemoPresenter> implements N
 
             case R.id.btn_test_api3:
                 getPresenter().testApi3();
+                break;
+
+            case R.id.btn_test_api4:
+                getPresenter().testApi4();
+                break;
+
+            default:
                 break;
         }
     }

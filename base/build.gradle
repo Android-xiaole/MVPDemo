@@ -2,17 +2,17 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
 
 android {
-    compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
 
 
     defaultConfig {
-        minSdkVersion Integer.parseInt(MIN_SDK_VERSION)
-        targetSdkVersion Integer.parseInt(TARGET_SDK_VERSION)
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
 
-        //设置资源文件命名加上约束，解耦
+        // 设置资源文件命名加上约束，解耦
         resourcePrefix "base_"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // 如果此模块被打包成aar，以下配置的混淆文件将一并被打包到aar中并对aar包进行独立混淆
         consumerProguardFiles 'consumer-rules.pro'
 
         javaCompileOptions {
@@ -28,6 +28,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -38,43 +39,21 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    api 'androidx.appcompat:appcompat:1.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    api rootProject.ext.androidDependencies.constraintLayout
+    api rootProject.ext.androidDependencies.lifecycle
 
-    //rxjava库，暂时先用rxjava2因为retrofit2还没适配rxjava3，https://github.com/ReactiveX/RxJava
-    api "io.reactivex.rxjava2:rxjava:2.2.14"
-    //rxandroid库，https://github.com/ReactiveX/RxAndroid
-    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    api rootProject.ext.rxJavaDependencies.rxJava
+    api rootProject.ext.rxJavaDependencies.rxAndroid
 
-    //retrofit2库，https://github.com/square/retrofit
-    api 'com.squareup.retrofit2:retrofit:2.6.2'
-    //retrofit2的转换器，将json返回结果直接转换成类，底层是gson
-    api 'com.squareup.retrofit2:converter-gson:2.6.2'
-    //retrofit2的转换器，将返回结果直接转换成String
-    api 'com.squareup.retrofit2:converter-scalars:2.6.2'
-    //retrofit2适配rxjava的库，https://github.com/square/retrofit/tree/master/retrofit-adapters/rxjava2
-    api 'com.squareup.retrofit2:adapter-rxjava2:2.6.2'
+    api rootProject.ext.retrofitDependencies.retrofit
+    api rootProject.ext.retrofitDependencies.converterGson
+    api rootProject.ext.retrofitDependencies.converterScalars
+    api rootProject.ext.retrofitDependencies.adapterRxjava
 
-    //gson解析，https://github.com/google/gson
-    api'com.google.code.gson:gson:2.8.6'
+    api rootProject.ext.otherDependencies.autodispose
+    api rootProject.ext.otherDependencies.util
+    api rootProject.ext.otherDependencies.butterknife
+    api rootProject.ext.otherDependencies.arouter
+    api rootProject.ext.otherDependencies.arouterCompiler
 
-    // 如果使用的是java 8要显示声明如下的,这是google的lifecycle组件
-    def lifecycle_version = "1.1.1"
-    api "android.arch.lifecycle:common-java8:$lifecycle_version"
-
-    // autodispose库，配合lifecycle组件使用,用于解决MVP模式内存泄漏的问题,https://github.com/uber/AutoDispose
-    api 'com.uber.autodispose:autodispose-android-archcomponents:1.4.0'
-
-    //非常全面的android工具类库,https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
-    api 'com.blankj:utilcodex:1.25.9'
-
-    //黄油刀控件注解框架,https://github.com/JakeWharton/butterknife
-    api 'com.jakewharton:butterknife:10.2.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
-
-    //alibaba路由框架，需要注意的是版本号一定要是对应的最新版本，https://github.com/alibaba/ARouter
-    api 'com.alibaba:arouter-api:1.5.0'
-    annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
 }

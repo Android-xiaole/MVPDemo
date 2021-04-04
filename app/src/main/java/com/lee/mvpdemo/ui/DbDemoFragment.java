@@ -13,7 +13,7 @@ import com.lee.mvpdemo.R;
  * Date ：2019-11-19 15:18
  * Description ：
  */
-@Route(path = LeeConstants.RoutePath.APP_DBDEMO_ACTIVITY)
+@Route(path = LeeConstants.RoutePath.APP_DBDEMO_FRAGMENT)
 public class DbDemoFragment extends BaseFragment {
 
     @Override

@@ -32,5 +32,7 @@ public interface HttpProvider {
 
     long configReadTimeoutMills();//设置读取时长，不设置就默认10s
 
+    long configWriteTimeoutMills();//设置写入时长，不设置就默认10s
+
     boolean configLogEnable();//设置是否打印日志，日志包含请求和响应的相关参数及返回值
 }

@@ -77,6 +77,11 @@ public class LeeApi extends BaseApi {
             }
 
             @Override
+            public long configWriteTimeoutMills() {
+                return 0;
+            }
+
+            @Override
             public boolean configLogEnable() {
                 return LeeConstants.IS_DEBUG;
             }

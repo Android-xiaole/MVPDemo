@@ -3,6 +3,7 @@
     <string name="test_api">返回类型ResponseBody</string>
     <string name="test_api2">返回类型String</string>
     <string name="test_api3">返回类型Object</string>
+    <string name="test_api4">测试RequestBodyBuilder</string>
 
     <string name="tab_featured">网络</string>
     <string name="tab_classify">数据库</string>

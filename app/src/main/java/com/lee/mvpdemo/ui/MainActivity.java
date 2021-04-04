@@ -39,8 +39,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         bottomAppBar.setOnNavigationItemSelectedListener(this);
         //init fragment
         ArrayList<String> pathList = new ArrayList<>();
-        pathList.add(LeeConstants.RoutePath.APP_NETDEMO_ACTIVITY);
-        pathList.add(LeeConstants.RoutePath.APP_DBDEMO_ACTIVITY);
+        pathList.add(LeeConstants.RoutePath.APP_NETDEMO_FRAGMENT);
+        pathList.add(LeeConstants.RoutePath.APP_DBDEMO_FRAGMENT);
         fragmentHelper = new FragmentHelper<>(this, pathList, R.id.fl_container);
 
         //这里可以添加带有参数的fragment

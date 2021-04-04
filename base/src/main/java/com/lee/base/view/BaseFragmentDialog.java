@@ -8,11 +8,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 /**
- *  关于解决DialogFragment可能存在内存泄漏的问题（参考）（测试发现在一个界面重复调用show会频繁出现内存泄漏，但是帖子针对的都是说安卓5.0以下才会出现的问题）
- *
- *  @link https://segmentfault.com/q/1010000017286787/a-1020000017322905
- *  @link https://www.cnblogs.com/endure/p/7664320.html
- *
  *  DialogFragment为google官方推荐使用的dialog，其生命周期与activity绑定，方便管理
  */
 public class BaseFragmentDialog extends DialogFragment {
@@ -33,6 +28,8 @@ public class BaseFragmentDialog extends DialogFragment {
                 ft.add(this, getClass().getSimpleName());
                 //不用commit方法是为了防止出现异常-Caused by: java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState
                 ft.commitAllowingStateLoss();
+                // 主动调用此方法是为了将mDismissed设置为false，防止出现调用show之后立马调用dissmiss方法弹窗无法消失的问题
+                onAttach(getContext());
             }
         }catch (Exception e){
             //这里抓取一下异常，防止特殊情况下add报错
@@ -65,42 +62,4 @@ public class BaseFragmentDialog extends DialogFragment {
             onDismissListener = null;
         }
     }
-
-    //    @Override
-//    public void onActivityCreated(Bundle savedInstanceState) {
-//        boolean isShow = this.getShowsDialog();
-//        this.setShowsDialog(false);
-//        super.onActivityCreated(savedInstanceState);
-//        this.setShowsDialog(isShow);
-//        //以上代码是为了调用fragment的super.onActivityCreated(savedInstanceState);
-//
-//        if (isShow) {
-//            //以下代码是取消调用了super里面的两个监听
-//            // this.mDialog.setOnCancelListener(this);
-//            // this.mDialog.setOnDismissListener(this);
-//            //  这样dialog就不默认实现这两个监听，如果需要监听需要外部手动设置
-//            View view = this.getView();
-//            if (view != null) {
-//                if (view.getParent() != null) {
-//                    throw new IllegalStateException("DialogFragment can not be attached to a container view");
-//                }
-//
-//                this.getDialog().setContentView(view);
-//            }
-//
-//            Activity activity = this.getActivity();
-//            if (activity != null) {
-//                this.getDialog().setOwnerActivity(activity);
-//            }
-//
-//            this.getDialog().setCancelable(this.isCancelable());
-//            if (savedInstanceState != null) {
-//                Bundle dialogState = savedInstanceState.getBundle("android:savedDialogState");
-//                if (dialogState != null) {
-//                    this.getDialog().onRestoreInstanceState(dialogState);
-//                }
-//            }
-//        }
-//    }
-
 }

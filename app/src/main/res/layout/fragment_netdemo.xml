@@ -30,6 +30,15 @@
         android:layout_height="wrap_content"
         android:text="@string/test_api3"
         android:textAllCaps="false"
+        app:layout_constraintBottom_toTopOf="@+id/btn_test_api4"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/btn_test_api4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/test_api4"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toTopOf="@+id/scroll_view"
         app:layout_constraintLeft_toLeftOf="parent" />
 

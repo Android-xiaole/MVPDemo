@@ -1,7 +1,7 @@
 package com.lee.base.mvp.rxjava;
 
 import com.lee.base.mvp.BaseError;
-import com.lee.base.mvp.IModel;
+import com.lee.base.mvp.model.IModel;
 
 import org.reactivestreams.Publisher;
 

@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
 
 android {
-    compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+
     defaultConfig {
-        applicationId "com.lee.mvpdemo"
-        minSdkVersion Integer.parseInt(MIN_SDK_VERSION)
-        targetSdkVersion Integer.parseInt(TARGET_SDK_VERSION)
-        versionCode Integer.parseInt(VERSION_CODE)
-        versionName VERSION_NAME
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        applicationId rootProject.ext.android.applicationId
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -17,11 +17,52 @@ android {
             }
         }
     }
+
+    signingConfigs {
+        release {
+            keyAlias rootProject.ext.signConfig.keyAlias
+            keyPassword rootProject.ext.signConfig.keyPassword
+            storeFile file(rootProject.ext.signConfig.storeFile)
+            storePassword rootProject.ext.signConfig.storePassword
+        }
+        debug {
+            keyAlias rootProject.ext.signConfig.keyAlias
+            keyPassword rootProject.ext.signConfig.keyPassword
+            storeFile file(rootProject.ext.signConfig.storeFile)
+            storePassword rootProject.ext.signConfig.storePassword
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            // 是否进行混淆
+            minifyEnabled true
+            // 去除没有用到的资源文件，要求minifyEnabled为true才生效
+            shrinkResources true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    android.applicationVariants.all {
+        variant ->
+            variant.outputs.all {
+                // 此处指定生成的apk文件名
+                outputFileName = 'MVPDemo_' + rootProject.ext.android.versionName + '_' + releaseTime() + '_' + buildType.name + '.apk'
+            }
+    }
+
+    // lint配置
+    lintOptions {
+        // 移除lint检查的error
+        abortOnError false
+        // 禁止掉某些lint检查
+        disable 'NewApi'
     }
 
     compileOptions {
@@ -30,13 +71,16 @@ android {
     }
 }
 
+static def releaseTime() {
+    return new Date().format("yyyyMMddHHmm", TimeZone.getTimeZone("UTC"))
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.android.material:material:1.2.0-alpha01'
-
     implementation project(path: ':base')
-    annotationProcessor "com.jakewharton:butterknife-compiler:10.2.0"
-    annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
+
+    implementation rootProject.ext.androidDependencies.material
+    annotationProcessor rootProject.ext.otherDependencies.arouterCompiler
+    annotationProcessor rootProject.ext.otherDependencies.butterknifeCompiler
 }

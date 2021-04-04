@@ -16,7 +16,7 @@ public class LeeConstants extends BaseConstants {
      * 建议path命名规则：module名_业务名_type
      */
     public static final class RoutePath{
-        public static final String APP_NETDEMO_ACTIVITY = "/ui/NetDemoFragment";
-        public static final String APP_DBDEMO_ACTIVITY = "/ui/DbDemoFragment";
+        public static final String APP_NETDEMO_FRAGMENT = "/app/ui/NetDemoFragment";
+        public static final String APP_DBDEMO_FRAGMENT = "/app/ui/DbDemoFragment";
     }
 }

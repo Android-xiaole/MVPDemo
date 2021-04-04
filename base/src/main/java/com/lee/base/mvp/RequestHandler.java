@@ -7,7 +7,7 @@ import okhttp3.Response;
 /**
  * Author ：le
  * Date ：2019-11-13 15:55
- * Description ：
+ * Description ：请求拦截处理类，常用来设置公共请求头
  */
 public interface RequestHandler {
 

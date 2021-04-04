@@ -24,16 +24,17 @@ public abstract class BaseApplication extends Application {
         Utils.init(this);
         //alibaba路由框架初始化
         ARouter.init(this);
-        if(isDebug()){
+        if (isDebug()) {
             //alibaba路由框架打开log
             ARouter.openLog();
             ARouter.openDebug();
-        }else{
+        } else {
             //rxjava全局捕获异常处理，建议只在线上模式打开，避免程序异常奔溃；debug模式下关闭，方便查看异常
             RxJavaPlugins.setErrorHandler(throwable -> LogUtils.e(throwable.getMessage()));
         }
     }
 
     protected abstract void init();
+
     protected abstract boolean isDebug();
 }

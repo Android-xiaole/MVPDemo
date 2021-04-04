@@ -20,7 +20,7 @@ import io.reactivex.functions.Function;
  * Date ：2019-10-22 14:54
  * Description ：rxjava重试机制类
  */
-public class RetryFuntion implements Function<Observable<Throwable>, ObservableSource<?>> {
+public class RetryFunction implements Function<Observable<Throwable>, ObservableSource<?>> {
     private int maxConnectCount = 2;
     // 当前已重试次数
     private int currentRetryCount = 0;
@@ -29,16 +29,16 @@ public class RetryFuntion implements Function<Observable<Throwable>, ObservableS
 
     private String retryTag = "";//非必须，只是为了方便查看log，异常产生于哪里
 
-    public RetryFuntion(String retryTag) {
+    public RetryFunction(String retryTag) {
         this.retryTag = retryTag;
     }
 
-    public RetryFuntion() {
+    public RetryFunction() {
     }
 
 
     @Override
-    public ObservableSource<?> apply(Observable<Throwable> throwableObservable){
+    public ObservableSource<?> apply(Observable<Throwable> throwableObservable) {
         return throwableObservable.flatMap((Function<Throwable, ObservableSource<?>>) throwable -> {
             LogUtils.e(retryTag + "发生异常 = " + throwable.toString());
             boolean needRetry = throwable instanceof IOException;
@@ -56,7 +56,7 @@ public class RetryFuntion implements Function<Observable<Throwable>, ObservableS
                     LogUtils.e(retryTag + "重试次数 = " + currentRetryCount);
 
                     waitRetryTime = 1000 + currentRetryCount * 1000;
-                    LogUtils.d(retryTag+"等待时间 =" + waitRetryTime);
+                    LogUtils.d(retryTag + "等待时间 =" + waitRetryTime);
                     return Observable.just(1).delay(waitRetryTime, TimeUnit.MILLISECONDS);
                 } else {
                     // 若重试次数已 > 设置重试次数，则不重试

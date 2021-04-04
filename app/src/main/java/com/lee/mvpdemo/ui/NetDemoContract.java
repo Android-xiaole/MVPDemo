@@ -15,6 +15,8 @@ public interface NetDemoContract {
         void testApi2();
 
         void testApi3();
+
+        void testApi4();
     }
 
     interface View extends BaseContract.IView{

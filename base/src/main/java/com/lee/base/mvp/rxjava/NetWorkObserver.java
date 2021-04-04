@@ -2,26 +2,35 @@ package com.lee.base.mvp.rxjava;
 
 import com.blankj.utilcode.util.NetworkUtils;
 import com.google.gson.JsonParseException;
+import com.google.gson.stream.MalformedJsonException;
 import com.lee.base.mvp.BaseError;
 
 import org.json.JSONException;
 
 import java.net.UnknownHostException;
 
-import io.reactivex.subscribers.ResourceSubscriber;
+import io.reactivex.observers.ResourceObserver;
 
 
 /**
  * Author ：le
- * Date ：2019-10-22 14:09
- * Description ：
+ * Date ：2019-10-22 9:59
+ * Description ：为Observable定制的专为网络请求使用的ResourceObserver
  */
-public abstract class FlowableSubscriber extends ResourceSubscriber {
+public abstract class NetWorkObserver<T> extends ResourceObserver<T> {
+
+    // 网络请求成功的回调
+    protected abstract void onSuccess(T t);
+
+    // 网络请求失败回调
+    protected abstract void onFailure(BaseError error);
+
     /**
      * 网络请求结束的回调（不管成功还是失败都会回调，这里一般可以去做progress dismiss的操作）
      * 这和onComplete不同，onComplete只会在onNext走完之后回调,该方法不需要可以不调用
      */
-    protected void onEnd() {}
+    protected void onEnd() {
+    }
 
     @Override
     protected void onStart() {
@@ -34,12 +43,17 @@ public abstract class FlowableSubscriber extends ResourceSubscriber {
                 if (!isDisposed()) {
                     dispose();
                 }
-                onFail(BaseError.netWorkError());
+                onFailure(BaseError.netWorkError());
                 onEnd();
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onNext(T t) {
+        onSuccess(t);
     }
 
     @Override
@@ -49,7 +63,7 @@ public abstract class FlowableSubscriber extends ResourceSubscriber {
             if (!(e instanceof BaseError)) {
                 if (e instanceof UnknownHostException) {
                     error = BaseError.netWorkError();
-                } else if (e instanceof JSONException || e instanceof JsonParseException) {
+                } else if (e instanceof JSONException || e instanceof JsonParseException || e instanceof MalformedJsonException) {
                     error = BaseError.jsonParseError();
                 } else {
                     error = new BaseError(e);
@@ -57,19 +71,17 @@ public abstract class FlowableSubscriber extends ResourceSubscriber {
             } else {
                 error = (BaseError) e;
             }
-        }else{
-            //e=null，就设定为未知异常
+        } else {
+            // e=null，就设定为未知异常
             error = BaseError.unKnowError();
         }
-        onFail(error);
+        onFailure(error);
         onEnd();
     }
-
-    //网络请求失败回调
-    protected abstract void onFail(BaseError error);
 
     @Override
     public void onComplete() {
         onEnd();
     }
+
 }
