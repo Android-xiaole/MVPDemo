@@ -2,7 +2,7 @@ package com.lee.mvpdemo.api;
 
 import com.lee.mvpdemo.data.bean.AuthBankCardBean;
 
-import io.reactivex.Observable;
+import io.reactivex.rxjava3.core.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

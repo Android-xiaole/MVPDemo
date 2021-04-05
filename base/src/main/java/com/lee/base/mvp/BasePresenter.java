@@ -1,13 +1,13 @@
 package com.lee.base.mvp;
 
-import com.uber.autodispose.AutoDispose;
-import com.uber.autodispose.AutoDisposeConverter;
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
+import autodispose2.AutoDispose;
+import autodispose2.AutoDisposeConverter;
+import autodispose2.androidx.lifecycle.AndroidLifecycleScopeProvider;
 
 /**
  * Author ：le

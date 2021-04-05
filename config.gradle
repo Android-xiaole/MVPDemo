@@ -18,6 +18,10 @@ ext {
             storePassword: 'android'
     ]
 
+    /** --------------------以下为依赖配置------------------------------------- */
+    def rxJavaVersion = '3.0.0'
+    def retrofitVersion = '2.9.0'
+
     // google官方依赖
     androidDependencies = [
             constraintLayout: 'androidx.constraintlayout:constraintlayout:2.0.4',
@@ -29,27 +33,27 @@ ext {
     // rxjava依赖
     rxJavaDependencies = [
             // rxjava库，https://github.com/ReactiveX/RxJava
-            rxJava   : 'io.reactivex.rxjava2:rxjava:2.2.14',
+            rxJava   : "io.reactivex.rxjava3:rxjava:$rxJavaVersion",
             //rxandroid库，https://github.com/ReactiveX/RxAndroid
-            rxAndroid: 'io.reactivex.rxjava2:rxandroid:2.1.1'
+            rxAndroid: "io.reactivex.rxjava3:rxandroid:$rxJavaVersion"
     ]
 
     // retrofit依赖
     retrofitDependencies = [
             // retrofit2库，https://github.com/square/retrofit
-            retrofit        : 'com.squareup.retrofit2:retrofit:2.6.2',
+            retrofit        : "com.squareup.retrofit2:retrofit:$retrofitVersion",
             // retrofit2的转换器，将json返回结果直接转换成类，底层是gson
-            converterGson   : 'com.squareup.retrofit2:converter-gson:2.6.2',
+            converterGson   : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
             // retrofit2的转换器，将返回结果直接转换成String
-            converterScalars: 'com.squareup.retrofit2:converter-scalars:2.6.2',
-            // retrofit2适配rxjava2的库，https://github.com/square/retrofit/tree/master/retrofit-adapters/rxjava2
-            adapterRxjava   : 'com.squareup.retrofit2:adapter-rxjava2:2.6.2'
+            converterScalars: "com.squareup.retrofit2:converter-scalars:$retrofitVersion",
+            // retrofit2适配rxjava的库，https://github.com/square/retrofit/tree/master/retrofit-adapters/rxjava3
+            adapterRxjava   : "com.squareup.retrofit2:adapter-rxjava3:$retrofitVersion"
     ]
 
     // 其他依赖
     otherDependencies = [
             // autodispose库，配合lifecycle组件使用,用于解决MVP模式内存泄漏的问题,https://github.com/uber/AutoDispose
-            autodispose        : 'com.uber.autodispose:autodispose-android-archcomponents:1.4.0',
+            autodispose        : 'com.uber.autodispose2:autodispose-androidx-lifecycle:2.0.0',
 
             // 非常全面的android工具类库,https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
             util               : 'com.blankj:utilcodex:1.25.9',

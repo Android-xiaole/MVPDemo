@@ -8,8 +8,8 @@ import org.json.JSONException;
 
 import java.net.UnknownHostException;
 
-import io.reactivex.annotations.NonNull;
-import io.reactivex.subscribers.ResourceSubscriber;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.subscribers.ResourceSubscriber;
 
 
 /**

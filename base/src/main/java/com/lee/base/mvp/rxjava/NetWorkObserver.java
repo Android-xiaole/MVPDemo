@@ -9,7 +9,7 @@ import org.json.JSONException;
 
 import java.net.UnknownHostException;
 
-import io.reactivex.observers.ResourceObserver;
+import io.reactivex.rxjava3.observers.ResourceObserver;
 
 
 /**

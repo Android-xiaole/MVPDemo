@@ -11,11 +11,11 @@ import com.lee.mvpdemo.data.bean.TestBean;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.observers.ResourceObserver;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.observers.ResourceObserver;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 
 /**
@@ -32,7 +32,7 @@ public class NetDemoPresenter extends BasePresenter<NetDemoContract.View> implem
                 .subscribeOn(Schedulers.io())
                 .map(ResponseBody::string)
                 .observeOn(AndroidSchedulers.mainThread())
-                .as(bindLifecycle())
+                .to(bindLifecycle())
                 .subscribe(new NetWorkObserver<String>() {
 
                     @Override
@@ -59,7 +59,7 @@ public class NetDemoPresenter extends BasePresenter<NetDemoContract.View> implem
         LeeApi.getInstance().testApi2()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .as(bindLifecycle())
+                .to(bindLifecycle())
                 .subscribe(new NetWorkObserver<String>() {
 
                     @Override
@@ -86,7 +86,7 @@ public class NetDemoPresenter extends BasePresenter<NetDemoContract.View> implem
         LeeApi.getInstance().testApi3("6222600260001072444")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .as(bindLifecycle())
+                .to(bindLifecycle())
                 .subscribe(new NetWorkObserver<AuthBankCardBean>() {
 
                     @Override

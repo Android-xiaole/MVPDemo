@@ -25,7 +25,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
@@ -66,7 +66,7 @@ public abstract class BaseApi {
                 .client(getClient(httpProvider))
                 .callbackExecutor(executorService)
                 .baseUrl(httpProvider.configBaseUrl())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create());
 
         //设置外部额外配置的自定义转换器
         Converter.Factory[] factories = httpProvider.configConverterFactories();
